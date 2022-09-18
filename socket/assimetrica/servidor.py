@@ -3,17 +3,9 @@ import rsa
 import generateKeys
 
 def server(host = 'localhost', port=8082):
-    with open('publicServer.pem', mode='rb') as publicfile:
-        keydata = publicfile.read()
-    pubServerkey = rsa.PublicKey.load_pkcs1(keydata)
-
-    with open('privateServer.pem', mode='rb') as privatefile:
-        keydata = privatefile.read()
-    privServerkey = rsa.PrivateKey.load_pkcs1(keydata)
-
-    with open('publicClient.pem', mode='rb') as publicfile:
-        keydata = publicfile.read()
-    pubClientkey = rsa.PublicKey.load_pkcs1(keydata)
+    pubServerkey, privServerkey = generateKeys.carregarKeys('Server')
+    pubClientkey = generateKeys.carregarKeys('Client')
+    pubClientkey = pubClientkey[0]
     
     data_payload = 2048 #The maximum amount of data to be received at once
     # Create a TCP socket

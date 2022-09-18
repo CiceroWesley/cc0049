@@ -3,18 +3,10 @@ import rsa
 import generateKeys
 
 def client(host = 'localhost', port=8082):
-    with open('publicClient.pem', mode='rb') as publicfile:
-        keydata = publicfile.read()
-    pubClientkey = rsa.PublicKey.load_pkcs1(keydata)
-
-    with open('privateClient.pem', mode='rb') as privatefile:
-        keydata = privatefile.read()
-    privClientkey = rsa.PrivateKey.load_pkcs1(keydata)
-
-    with open('publicServer.pem', mode='rb') as publicfile:
-        keydata = publicfile.read()
-    pubServerkey = rsa.PublicKey.load_pkcs1(keydata)
-
+    pubClientkey, privClientkey = generateKeys.carregarKeys('Client')
+    pubServerkey = generateKeys.carregarKeys('Server')
+    pubServerkey = pubServerkey[0]
+    
     # Create a TCP/IP socket
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # Connect the socket to the server

@@ -13,3 +13,17 @@ def gerarKeys(entity):
         privFile.close()
     else:
         return None
+
+def carregarKeys(entity):
+    with open('public'+ entity + '.pem', mode='rb') as publicfile:
+        keydata = publicfile.read()
+    pubKey = rsa.PublicKey.load_pkcs1(keydata)
+
+    with open('private' + entity+ '.pem', mode='rb') as privatefile:
+        keydata = privatefile.read()
+    privKey = rsa.PrivateKey.load_pkcs1(keydata)
+    return pubKey, privKey
+
+
+
+
